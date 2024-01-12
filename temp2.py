@@ -7,12 +7,20 @@ mtcnn = MTCNN(image_size = 160, keep_all=True)
 
 def get_faces(img, window = 'Image', display = False):
     boxes, prob = mtcnn.detect(img)
-    
+    coords = []
     img = np.array(img)
+    counter = 0
     for box in boxes:
+        curr_prob = prob[counter]
+        #print(counter, curr_prob)
         x1, y1, x2, y2 = int(box[0]), int(box[1]), int(box[2]), int(box[3])
-        print(x1, y1, x2, y2)
-        cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 4)
+        #print(x1, y1, x2, y2)
+        #cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 4)
+        if curr_prob > 0.9:
+            #print('I am inside')
+            coords.append([x1, y1, x2, y2])
+        counter += 1
+
     if display == True:
         cv2.imshow(window, img)
         while True:
@@ -20,7 +28,7 @@ def get_faces(img, window = 'Image', display = False):
             if k%256 == 32:
                 cv2.destroyAllWindows()
                 break
-    return img
+    return coords
 
 if __name__ == '__main__':
 

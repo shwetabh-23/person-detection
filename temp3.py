@@ -5,10 +5,10 @@ import yaml
 model = YOLO(r'yolo-Weights/yolov8n.pt')
 
 img_path = r'/home/harsh/AI-Projects/person-detection/IMG20231203223631.jpg'
+
 img = cv2.imread(img_path)
 cv2.namedWindow('Image', cv2.WINDOW_NORMAL)
 cv2.resizeWindow('Image', 900, 900)
-
 
 classes_path = r'/home/harsh/AI-Projects/person-detection/classes.yaml'
 
@@ -18,6 +18,9 @@ with open(classes_path, 'r') as classes:
 def get_boxes(img, window = 'Image', display = False):
 
     results = model(img)
+
+    coords = []
+
     for r in results:
 
         boxes = r.boxes
@@ -26,9 +29,9 @@ def get_boxes(img, window = 'Image', display = False):
             
             x1, y1, x2, y2 = box.xyxy[0]
             x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
-            print(x1, y1, x2, y2)
-            cv2.rectangle(img, (x1, y1), (x2, y2), (255, 0, 255), 3)
-                    
+            #print(x1, y1, x2, y2)
+            #cv2.rectangle(img, (x1, y1), (x2, y2), (255, 0, 255), 3)
+            coords.append([x1, y1, x2, y2])
             cls = int(box.cls[0])
             
             org = [x1, y1]
@@ -37,7 +40,7 @@ def get_boxes(img, window = 'Image', display = False):
             color = (255, 0, 0)
             thickness = 5
             
-            cv2.putText(img, f'{x1}, {y1}, {x2}, {y2}', org, font, fontscale, color, thickness)
+            #cv2.putText(img, f'{x1}, {y1}, {x2}, {y2}', org, font, fontscale, color, thickness)
 
             cv2.imshow(window, img)
         if display == True:
@@ -46,5 +49,5 @@ def get_boxes(img, window = 'Image', display = False):
                 if k % 256 == 32:
                     #cv2.destroyAllWindows()
                     break
-        return img
+        return coords
 
