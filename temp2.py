@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 from PIL import Image
 
-mtcnn = MTCNN(image_size = 160, keep_all=True)
+mtcnn = MTCNN(image_size = 160)
 
 def get_faces(img, window = 'Image', display = False):
     boxes, prob = mtcnn.detect(img)
@@ -15,7 +15,7 @@ def get_faces(img, window = 'Image', display = False):
         #print(counter, curr_prob)
         x1, y1, x2, y2 = int(box[0]), int(box[1]), int(box[2]), int(box[3])
         #print(x1, y1, x2, y2)
-        #cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 4)
+        cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 4)
         if curr_prob > 0.9:
             #print('I am inside')
             coords.append([x1, y1, x2, y2])
@@ -30,9 +30,16 @@ def get_faces(img, window = 'Image', display = False):
                 break
     return coords
 
+def extract_faces(img):
+    
+    # Detect faces
+    face = mtcnn(img)
+    
+    return face
+
 if __name__ == '__main__':
 
-    img = r'/home/harsh/AI-Projects/person-detection/IMG20231203223631.jpg'
+    img = r'temp_images/face_temp.jpg'
     img = Image.open(img)
     cv2.namedWindow('Image', cv2.WINDOW_NORMAL)
     cv2.resizeWindow('Image', 900, 900)

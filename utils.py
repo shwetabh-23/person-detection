@@ -4,21 +4,28 @@ from PIL import Image
 import cv2
 import os
 import sys
+import torch
 
 mtcnn = MTCNN(image_size=160)
 
 resnet = InceptionResnetV1(pretrained='vggface2').eval()
 
-def detect_face(img_path):
-    img = Image.open(img_path)
+def detect_face(img):
+
     try:
-        img_cropped = mtcnn(img)
-        img_embedding = resnet(img_cropped.unsqueeze(0))
+
+        tensor_img = img.unsqueeze(0)
+       
+        img_embedding = resnet(tensor_img)
         img_embedding = img_embedding.detach().numpy().flatten()
-        return img_cropped, img_embedding
+
+        print('face detected')
+
+        return img, img_embedding
     except:
+
         print('Face cannot be detected, try again')
-        os._exit(1)
+        return None, None
 
 def display_img(img_cropped):
 
@@ -34,8 +41,14 @@ def display_img(img_cropped):
     image.show()
 
 def calc_dist(embedding1, embedding2):
-    breakpoint()
-    return np.sqrt(np.sum(np.square(embedding2 - embedding1)))
+
+    try :
+        result = np.sqrt(np.sum(np.square(embedding2 - embedding1)))
+        print('distance : ', result)
+        return result
+
+    except :
+        return float('inf')
 
 def capture_images(save_path):
     
@@ -88,3 +101,7 @@ def generate_embedding(save_path, face_path):
         embeddings.append(embedding)
     avg_embeds = (np.mean(np.array(embeddings), axis = 0))
     return avg_embeds
+
+if __name__ == '__main__':
+    img_path = 'temp_images/face_temp.jpg'
+    _, temp = detect_face(img_path=img_path)
