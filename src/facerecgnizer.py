@@ -38,7 +38,7 @@ def check_user(all_img_path, img):
 
                 saved_embedding = np.load(os.path.join(name_dir, f'{name}.npy'))
 
-                if calc_dist(curr_embedding, saved_embedding) < 0.7 : 
+                if calc_dist(curr_embedding, saved_embedding) < 1.0 : 
                     #print('distance is : ', calc_dist(curr_embedding, saved_embedding))
                     print("user exists, name : ", name)
                     return name, curr_embedding
