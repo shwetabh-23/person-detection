@@ -1,4 +1,4 @@
-from utils import calc_dist, capture_images, generate_embedding, detect_face, display_img
+from .utils import calc_dist, capture_images, generate_embedding, detect_face, display_img
 import os
 import numpy as np
 import cv2

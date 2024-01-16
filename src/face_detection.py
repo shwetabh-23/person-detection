@@ -12,12 +12,9 @@ def get_faces(img, window = 'Image', display = False):
     counter = 0
     for box in boxes:
         curr_prob = prob[counter]
-        #print(counter, curr_prob)
         x1, y1, x2, y2 = int(box[0]), int(box[1]), int(box[2]), int(box[3])
-        #print(x1, y1, x2, y2)
         cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 4)
         if curr_prob > 0.9:
-            #print('I am inside')
             coords.append([x1, y1, x2, y2])
         counter += 1
 
