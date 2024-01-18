@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+    <style>
+        body {
+            background-color: #4CAF50;
+            display: flex;
+            flex-direction: column;
+            
+            margin: 0;
+            color: white;
+        }
+        h1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Adjusted to center the uploadContainer */
+            margin-top: 20px
+        }
+        #imageContainer img {
+    margin-top: 100px; /* Adjust this value to move the image within the container */
+}
+
+
+        #uploadContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Adjusted to center the uploadContainer */
+            margin-top: 20px; /* Adjusted the margin-top value */
+        }
+
+        #imageContainer img {
+            margin-top: 100px; /* Adjust this value to move the image within the container */
+            display: block;  /* Ensures the image is a block element */
+            margin-left: 20px;  /* Sets left margin to 0 */
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Image Upload and Display</h1>
+    <div id="uploadContainer">
+        <input type="file" id="imageInput" accept="image/*">
+        <button onclick="uploadImage()">Upload Image</button>
+    </div>
+    <div id="imageContainer"></div>
+
+    <script>
+        function uploadImage() {
+            const input = document.getElementById("imageInput");
+            const file = input.files[0];
+
+            if (file) {
+                const formData = new FormData();
+                formData.append("file", file);
+
+                fetch("http://localhost:8001/upload-image/", {
+                    method: "POST",
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const imageContainer = document.getElementById("imageContainer");
+
+                    // Create a data URL for the uploaded image
+                    const imageUrl = URL.createObjectURL(file);
+
+                    // Create an image element and set its source to the data URL
+                    const uploadedImage = document.createElement("img");
+                    uploadedImage.src = imageUrl;
+
+                    // Append the image element to the imageContainer
+                    imageContainer.innerHTML = "";
+                    imageContainer.appendChild(uploadedImage);
+                })
+                .catch(error => console.error("Error:", error));
+            } else {
+                alert("Please select an image file.");
+            }
+        }
+    </script>
+</body>
+</html>
