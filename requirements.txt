@@ -4,3 +4,5 @@ ultralytics
 torch
 torchvision
 torchaudio
+fastapi
+uvicorn
