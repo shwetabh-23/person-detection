@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Processing</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #form-container {
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .image-preview {
+            margin-top: 10px;
+            max-width: 400px;
+            max-height: 400px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="form-container">
+        <h1>Image Processing</h1>
+        <form action="/process_images" method="post" enctype="multipart/form-data" onsubmit="showImages()">
+            <label for="file1">Select Image 1:</label>
+            <input type="file" name="file1" accept="image/*" onchange="previewImage(this, 'preview1')"><br>
+            <img id="preview1" class="image-preview"><br>
+
+            <label for="file2">Select Image 2:</label>
+            <input type="file" name="file2" accept="image/*" onchange="previewImage(this, 'preview2')"><br>
+            <img id="preview2" class="image-preview"><br>
+
+            <button type="submit">Process Images</button>
+        </form>
+
+        <div id="result-container" style="display: none;">
+            <h2>Processed Image</h2>
+            <img id="processedImage" class="image-preview">
+        </div>
+    </div>
+
+    <script>
+        function previewImage(input, previewId) {
+            var preview = document.getElementById(previewId);
+            var file = input.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        async function showImages() {
+            // Simulate processing delay
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            // Hide original image previews
+            document.getElementById('preview1').style.display = 'none';
+            document.getElementById('preview2').style.display = 'none';
+
+            // Show result container
+            document.getElementById('result-container').style.display = 'block';
+
+            // Load processed image
+            var processedImage = document.getElementById('processedImage');
+            processedImage.src = '/static/image.jpg';  // Replace with the actual path
+            processedImage.style.display = 'block';
+
+            return true;  // Continue with form submission
+        }
+    </script>
+</body>
+</html>
