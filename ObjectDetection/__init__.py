@@ -1,1 +1,0 @@
-from .objdet import object_detection
