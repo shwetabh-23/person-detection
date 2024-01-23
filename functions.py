@@ -24,7 +24,7 @@ fontscale = 2
 color = (255, 0, 0)
 thickness = 2
 
-def get_name_image(img):
+def get_name_image(img, image_name):
         
         img_numpy = np.array(img)
         display_img = img_numpy.copy()
@@ -56,18 +56,18 @@ def get_name_image(img):
                         save_img = display_img[y1_p : y2_p, x1_p : x2_p]
                         try:
                             image_bgr = cv2.cvtColor(save_img, cv2.COLOR_RGB2BGR)
-                            cv2.imwrite('static/image.jpg', image_bgr)
+                            cv2.imwrite(f'static/{image_name}', image_bgr)
                             return image_bgr
                         except:
 
                             continue
+import os
 
-def add_new_user(image):
+def add_new_user(image, name):
     image = np.array(image)
     face = extract_faces(image)
     img, embedding = detect_face(img=face)
-    np.save('curr_embeddings.npy', embedding)
-
+    np.save(os.path.join(r'/home/harsh/AI-Projects/person-detection/generated_embeddings', f'{name}.npy'), embedding)
 
 if __name__ == '__main__':
     img = r'/home/harsh/AI-Projects/person-detection/test_images/IMG20230511020948.jpg'

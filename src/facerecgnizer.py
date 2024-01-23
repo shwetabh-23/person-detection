@@ -23,9 +23,9 @@ def check_user(img):
     if curr_embedding is not None:
 
 
-        saved_embedding = np.load(r'/home/harsh/AI-Projects/person-detection/curr_embeddings.npy')
+        saved_embedding = np.load(r'/home/harsh/AI-Projects/person-detection/generated_embeddings/curr_embeddings.npy')
 
-        if calc_dist(curr_embedding, saved_embedding) < 1.0 : 
+        if calc_dist(curr_embedding, saved_embedding) < 0.8: 
             print('distance is : ', calc_dist(curr_embedding, saved_embedding))
             return True
 

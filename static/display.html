@@ -1,34 +1,82 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Display Image</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
     <style>
         body {
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             height: 100vh;
             margin: 0;
+            background-color: #f0f0f0;
         }
 
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
+        #image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px; /* Adjust the gap between images as needed */
+            justify-content: center;
         }
 
-        img {
-            max-width: 100%;
-            max-height: 100%;
-            margin-top: 10px;
+        .image-container {
+            width: 200px; /* Adjust the width of each image container as needed */
+            height: 700px; /* Adjust the height of each image container as needed */
+            margin: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            border-radius: 5px;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
     </style>
 </head>
 <body>
-    <h1>Image Display</h1>
 
-    <!-- Assuming you have a FastAPI route named 'get_image' to serve images -->
-    <img src="static/image.jpg" alt="the cropped image">
+    <div id="image-gallery"></div>
+
+    <script>
+        // JavaScript to dynamically load images from the 'static' directory
+
+        const container = document.getElementById('image-gallery');
+
+        // Replace 'static' with your actual directory path
+        const directoryPath = 'static';
+
+        fetchImages(directoryPath).then(images => {
+            images.forEach(image => {
+                const imageContainer = document.createElement('div');
+                imageContainer.className = 'image-container';
+
+                const imgElement = document.createElement('img');
+                imgElement.src = image;
+                imgElement.alt = 'Image';
+
+                imageContainer.appendChild(imgElement);
+                container.appendChild(imageContainer);
+            });
+        });
+
+        // Function to fetch images from the directory
+        async function fetchImages(directoryPath) {
+            const response = await fetch(`${directoryPath}/images.json`);
+
+            if (!response.ok) {
+                console.error(`Error loading images: ${response.status}`);
+                return [];
+            }
+
+            const images = await response.json();
+            return images;
+        }
+    </script>
 
 </body>
 </html>

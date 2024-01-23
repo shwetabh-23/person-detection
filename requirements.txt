@@ -1,8 +1,9 @@
 facenet-pytorch
-opencv-python
+python3-opencv
 ultralytics
 torch
 torchvision
 torchaudio
 fastapi
 uvicorn
+ffmpeg
