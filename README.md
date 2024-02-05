@@ -29,6 +29,14 @@ This tool leverages the following models for its functionalities:
 5. If the face is unknown, the user will be prompted to create a face embedding and add it to the directory.
 6. Cropped images of each person along with their names will be saved for further use.
 
+## Reproduce locally 
+
+1. run the command setup_env.sh
+    bash ./setup_env.sh
+
+2. run the command run_app.sh
+    bash ./run_app.sh
+
 ## Contributing
 
 Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
