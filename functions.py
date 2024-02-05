@@ -16,9 +16,6 @@ def display_img_window(img):
             cv2.destroyAllWindows()
             break
 
-
-all_test_img_path = r'/home/harsh/AI-Projects/person-detection/test_images'
-
 font = cv2.FONT_HERSHEY_SIMPLEX
 fontscale = 2
 color = (255, 0, 0)
@@ -67,10 +64,12 @@ def add_new_user(image, name):
     image = np.array(image)
     face = extract_faces(image)
     img, embedding = detect_face(img=face)
-    np.save(os.path.join(r'/home/harsh/AI-Projects/person-detection/generated_embeddings', f'{name}.npy'), embedding)
+    
+    np.save(os.path.join(r'generated_embeddings', f'{name}.npy'), embedding)
 
 if __name__ == '__main__':
     img = r'/home/harsh/AI-Projects/person-detection/test_images/IMG20230511020948.jpg'
     img = cv2.imread(img)
     image_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     get_name_image(image_rgb)    
+

@@ -2,8 +2,6 @@ from .utils import calc_dist, detect_face
 import os
 import numpy as np
 import cv2
-import tkinter as tk
-from tkinter import filedialog
 
 def new_user(save_path, embeddings):
 
@@ -23,7 +21,7 @@ def check_user(img):
     if curr_embedding is not None:
 
 
-        saved_embedding = np.load(r'/home/harsh/AI-Projects/person-detection/generated_embeddings/curr_embeddings.npy')
+        saved_embedding = np.load(r'generated_embeddings/curr_embeddings.npy')
 
         if calc_dist(curr_embedding, saved_embedding) < 0.8: 
             print('distance is : ', calc_dist(curr_embedding, saved_embedding))

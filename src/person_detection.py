@@ -4,11 +4,8 @@ import yaml
 import math
 
 model = YOLO(r'yolo-Weights/yolov8n.pt')
-
-img_path = r'test_images/74469533_2443137869348818_8858146082635382784_n.jpg'
-img = cv2.imread(img_path)
-
-classes_path = r'/home/harsh/AI-Projects/person-detection/classes.yaml'
+    
+classes_path = r'classes.yaml'
 
 with open(classes_path, 'r') as classes:
     classes = yaml.load(classes, Loader= yaml.FullLoader)
